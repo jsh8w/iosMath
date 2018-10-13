@@ -30,7 +30,7 @@
  @param name The name of the font file.
  @param size The size of the font to return.
  */
-- (nonnull MTFont*) fontWithName:(nonnull NSString*) name size:(CGFloat) size;
+- (nonnull MTFont*) fontWithName:(nonnull NSString*) name size:(CGFloat) size bundle:(NSBundle *) bundle;
 
 /** Helper function to return the Xits Math font. */
 - (nonnull MTFont*) xitsFontWithSize:(CGFloat) size;

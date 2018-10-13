@@ -19,6 +19,7 @@
 
 /** Returns a copy of this font but with a different size. */
 - (nonnull MTFont*) copyFontWithSize:(CGFloat) size;
++ (NSBundle*) fontBundle;
 
 /** The size of this font in points. */
 @property (nonatomic, readonly) CGFloat fontSize;

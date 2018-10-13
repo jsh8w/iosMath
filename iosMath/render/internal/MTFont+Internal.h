@@ -16,7 +16,7 @@
 @interface MTFont (Internal)
 
 /** Load the font with a given name. This is the designated initializer. */
-- (nonnull instancetype) initFontWithName:(nonnull NSString*) name size:(CGFloat) size;
+- (nonnull instancetype) initFontWithName:(nonnull NSString*) name size:(CGFloat) size bundle:(NSBundle *) bundle;
 
 /** Access to the raw CTFontRef if needed. */
 @property (nonatomic, readonly, nonnull) CTFontRef ctFont;

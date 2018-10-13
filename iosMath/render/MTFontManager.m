@@ -40,11 +40,11 @@ const int kDefaultFontSize = 20;
     return self;
 }
 
-- (MTFont *)fontWithName:(NSString *)name size:(CGFloat)size
+- (MTFont *)fontWithName:(NSString *)name size:(CGFloat)size bundle:(NSBundle *)bundle
 {
     MTFont* f = self.nameToFontMap[name];
     if (!f) {
-        f = [[MTFont alloc] initFontWithName:name size:size];
+        f = [[MTFont alloc] initFontWithName:name size:size bundle: bundle];
         self.nameToFontMap[name] = f;
     }
     if (f.fontSize == size) {
@@ -56,17 +56,20 @@ const int kDefaultFontSize = 20;
 
 - (MTFont *)latinModernFontWithSize:(CGFloat)size
 {
-    return [self fontWithName:@"latinmodern-math" size:size];
+    NSBundle* bundle = [MTFont fontBundle];
+    return [self fontWithName:@"latinmodern-math" size:size bundle: bundle];
 }
 
 - (MTFont *)xitsFontWithSize:(CGFloat)size
 {
-    return [self fontWithName:@"xits-math" size:size];
+    NSBundle* bundle = [MTFont fontBundle];
+    return [self fontWithName:@"xits-math" size:size bundle: bundle];
 }
 
 - (MTFont *)termesFontWithSize:(CGFloat)size
 {
-    return [self fontWithName:@"texgyretermes-math" size:size];
+    NSBundle* bundle = [MTFont fontBundle];
+    return [self fontWithName:@"texgyretermes-math" size:size bundle: bundle];
 }
 
 - (MTFont *)defaultFont

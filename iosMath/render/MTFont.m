@@ -13,24 +13,24 @@
 
 @interface MTFont ()
 
-@property (nonatomic, assign) CGFontRef defaultCGFont;
-@property (nonatomic, assign) CTFontRef ctFont;
-@property (nonatomic, strong) MTFontMathTable* mathTable;
-@property (nonatomic, strong) NSDictionary* rawMathTable;
+@property (nonatomic) CGFontRef defaultCGFont;
+@property (nonatomic) CTFontRef ctFont;
+@property (nonatomic) MTFontMathTable* mathTable;
+@property (nonatomic) NSDictionary* rawMathTable;
 
 @end
 
 @implementation MTFont
 
-- (instancetype)initFontWithName:(NSString *)name size:(CGFloat)size
+- (instancetype)initFontWithName:(NSString *)name size:(CGFloat)size bundle:(NSBundle *)bundle
 {
     self = [super init];
-    if (self != nil) {
+    if (self ) {
         // CTFontCreateWithName does not load the complete math font, it only has about half the glyphs of the full math font.
         // In particular it does not have the math italic characters which breaks our variable rendering.
         // So we first load a CGFont from the file and then convert it to a CTFont.
 
-        NSBundle* bundle = [MTFont fontBundle];
+//        NSBundle* bundle = [MTFont fontBundle];
         NSString* fontPath = [bundle pathForResource:name ofType:@"otf"];
         CGDataProviderRef fontDataProvider = CGDataProviderCreateWithFilename(fontPath.UTF8String);
         self.defaultCGFont = CGFontCreateWithDataProvider(fontDataProvider);
@@ -44,27 +44,6 @@
         self.mathTable = [[MTFontMathTable alloc] initWithFont:self mathTable:_rawMathTable];
     }
     return self;
-}
-
-- (void)setDefaultCGFont:(CGFontRef)defaultCGFont
-{
-    if (_defaultCGFont != nil) {
-        CFRelease(_defaultCGFont);
-    }
-    if (defaultCGFont != nil) {
-        CFRetain(defaultCGFont);
-    }
-    _defaultCGFont = defaultCGFont;
-}
-
-- (void)setCtFont:(CTFontRef)ctFont {
-    if (_ctFont != nil) {
-        CFRelease(_ctFont);
-    }
-    if (ctFont != nil) {
-        CFRetain(ctFont);
-    }
-    _ctFont = ctFont;
 }
 
 + (NSBundle*) fontBundle
@@ -103,7 +82,7 @@
 
 - (void)dealloc
 {
-    self.defaultCGFont=nil;
-    self.ctFont=nil;
+    CGFontRelease(self.defaultCGFont);
+    CFRelease(self.ctFont);
 }
 @end
